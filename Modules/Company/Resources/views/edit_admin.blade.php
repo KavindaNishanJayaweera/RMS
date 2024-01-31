@@ -1,0 +1,81 @@
+@include('company::layouts.header')
+<?php
+
+foreach ($other_details as $other_detail)  {
+    $name = $other_detail->name;
+    $phone = $other_detail->phone;
+}
+foreach ($login_details as $login_details)  {
+    $status = $login_details->status;
+    $email =$login_details->email;
+    if($status == "active"){
+    $check = "checked";
+    }
+    else{
+        $check = "";
+    }
+}
+?>
+<div class="page-wrapper">
+
+        <!-- Page Content-->
+        <div class="page-content-tab">
+
+            <div class="container-fluid">
+
+                <div class="row mt-4">
+                <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Edit Admin</h4>
+                                @if(Session::has('success')) <div class="alert alert-success mt-2 mb-2">{{ Session::get('success') }}</li></div>@endif
+                                @if(Session::has('fail')) <div class="alert alert-danger mt-2 mb-2">{{ Session::get('fail') }}</li></div>@endif
+                            </div><!--end card-header-->
+                            <div class="card-body">
+                                <form action="" method="post">
+                                @csrf
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" value="{{$name}}">
+                                        @if($errors->has("name")) <div class="alert alert-danger mt-2">{{ $errors->first('name') }}</li></div>@endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1">Email</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="{{$email}}">
+                                        @if($errors->has("email")) <div class="alert alert-danger mt-2">{{ $errors->first('email') }}</li></div>@endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1">Phone No</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="phone" value="{{$phone}}">
+                                        @if($errors->has("phone")) <div class="alert alert-danger mt-2">{{ $errors->first('phone') }}</li></div>@endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1">Current Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" name="current_password">
+                                        @if($errors->has("current_password")) <div class="alert alert-danger mt-2">{{ $errors->first('current_password') }}</li></div>@endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1">New Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                                        @if($errors->has("password")) <div class="alert alert-danger mt-2">{{ $errors->first('password') }}</li></div>@endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1">Confirm Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1" name="password_confirmation">
+                                        @if($errors->has("password_confirmation")) <div class="alert alert-danger mt-2">{{ $errors->first('password_confirmation') }}</li></div>@endif
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="InlineCheckbox" data-parsley-multiple="groups" data-parsley-mincheck="2" name="status" {{$check}}>
+                                            <label class="custom-control-label" for="InlineCheckbox">Active Admin</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-de-primary">Submit</button>
+
+                                </form>
+                            </div><!--end card-body-->
+                        </div><!--end card-->
+                    </div><!--end col-->
+                </div><!--end row-->
+    </div><!-- container -->
+    @include('company::layouts.footer')
